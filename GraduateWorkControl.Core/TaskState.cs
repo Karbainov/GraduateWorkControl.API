@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace GraduateWorkControl.Core
 {
-    internal class TaskState
+    public enum TaskState
     {
+        Pending = 1,
+        Review = 2,
+        Rework = 3,
+        Done = 4,
     }
 }

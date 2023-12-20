@@ -1,8 +1,13 @@
-﻿using GraduateWorkControl.API.Models.OutputModels;
+﻿using AutoMapper;
+using GraduateWorkControl.API.Mappings;
+using GraduateWorkControl.API.Models.OutputModels;
 using GraduateWorkControl.API.Models.StudentModels.InputModels;
 using GraduateWorkControl.API.Models.StudentModels.OutputModels;
 using GraduateWorkControl.API.Models.TeacherModels.InputModels;
 using GraduateWorkControl.API.Models.TeacherModels.OutputModels;
+using GraduateWorkControl.BLL;
+using GraduateWorkControl.BLL.Mappings;
+using GraduateWorkControl.BLL.Models.StudentModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +17,17 @@ namespace GraduateWorkControl.API.Controllers
     [Route("[controller]")]
     public class StudentController : Controller
     {
+        Mapper _mapper;
+        StudentServise _studentServise;
+
+        public StudentController()
+        {
+            _studentServise=new StudentServise();
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile(new MappingStudentProfile());
+            });
+            _mapper = new Mapper(config);
+        }
         //[Authorize(Roles = "admin")]
         [HttpGet(Name = "GetAllStudentsInfoForAdmin")]
         public IActionResult GetAllStudentsInfoForAdmin()
@@ -95,7 +111,8 @@ namespace GraduateWorkControl.API.Controllers
         [HttpPost(Name = "AddStudent")]
         public IActionResult AddStudent(StudentRegistrationInfoInputModel student)
         {
-            return Ok(10);
+            var s = _mapper.Map<StudentCreateModel>(student);
+            return Ok(_studentServise.AddStudent(s));
         }
 
         //[Authorize(Roles = "student")]

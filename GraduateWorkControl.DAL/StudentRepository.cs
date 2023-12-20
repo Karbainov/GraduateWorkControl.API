@@ -17,5 +17,10 @@ namespace GraduateWorkControl.DAL
             _context.SaveChanges();
             return student.Id;
         }
+
+        public StudentDto GetStudentById(int id)
+        {
+            return _context.Students.Where(s => s.Id == id).Single();
+        }
     }
 }

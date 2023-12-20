@@ -19,5 +19,10 @@ namespace GraduateWorkControl.DAL
 
             return teacherDto.Id;
         }
+
+        public TeacherDto GetTeacherById(int id)
+        {
+            return _context.Teachers.Where(s => s.Id == id).Single();
+        }
     }
 }

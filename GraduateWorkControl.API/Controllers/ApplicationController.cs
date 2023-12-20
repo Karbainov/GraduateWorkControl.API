@@ -1,5 +1,9 @@
-﻿using GraduateWorkControl.API.Models.ApplicationModels.InputModels;
+﻿using AutoMapper;
+using GraduateWorkControl.API.Mappings;
+using GraduateWorkControl.API.Models.ApplicationModels.InputModels;
 using GraduateWorkControl.API.Models.ApplicationModels.OutputModels;
+using GraduateWorkControl.BLL;
+using GraduateWorkControl.BLL.Models.ApplicationModels;
 using GraduateWorkControl.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +14,24 @@ namespace GraduateWorkControl.API.Controllers
     [Route("[controller]")]
     public class ApplicationController : Controller
     {
+        Mapper _mapper;
+        ApplicationService _applicationService;
+
+        public ApplicationController()
+        {
+            _applicationService = new ApplicationService();
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile(new MappingApplicationProfile());
+            });
+            _mapper = new Mapper(config);
+        }
 
         //[Authorize(Roles = "student")]
         [HttpPost(Name = "AddNewApplication")]
         public IActionResult AddNewApplication(NewApplicationInputModel application)
         {
-            return Ok(10);
+
+            return Ok(_applicationService.AddApplication(_mapper.Map<ApplicationCreateModel>(application)));
         }
 
         //[Authorize(Roles = "student")]

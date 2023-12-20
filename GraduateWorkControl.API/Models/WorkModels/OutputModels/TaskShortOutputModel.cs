@@ -10,6 +10,6 @@
 
         public string? Deadline { get; set; }
 
-        public TaskStatus Status { get; set; }
+        public TaskStatus State { get; set; }
     }
 }

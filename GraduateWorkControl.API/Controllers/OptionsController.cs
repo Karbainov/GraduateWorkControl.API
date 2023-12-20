@@ -1,6 +1,7 @@
 ﻿using GraduateWorkControl.API.Models.OutputModels;
 using GraduateWorkControl.API.Models.TeacherModels.InputModels;
 using GraduateWorkControl.API.Models.TeacherModels.OutputModels;
+using GraduateWorkControl.BLL;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,14 @@ namespace GraduateWorkControl.API.Controllers
     [Route("[controller]")]
     public class OptionsController : Controller
     {
-        [Authorize]
+        private OptionsService _optionsService;
+
+        public OptionsController()
+        {
+            _optionsService = new OptionsService();
+        }
+
+        //[Authorize]
         [HttpGet("faculty", Name = "GetAllFacultys")]
         public IActionResult GetAllFacultys()
         {
@@ -30,7 +38,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(a);
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet("subject", Name = "GetAllSubjects")]
         public IActionResult GetAllSubjects()
         {
@@ -56,28 +64,28 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(a);
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpPost("faculty", Name = "AddFaculty")]
         public IActionResult AddFaculty(string name)
         {
-            return Ok(10);
+            return Ok(_optionsService.AddFaculty(name));
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpPost("subject", Name = "AddSubject")]
         public IActionResult AddSubject(string name)
         {
-            return Ok(10);
+            return Ok(_optionsService.AddSubject(name));
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpPut ("faculty/{id}", Name = "ChangeFacultyName")]
         public IActionResult ChangeFacultyName(string newName)
         {
             return Ok(10);
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpPut("subject/{id}", Name = "ChangeSubjectName")]
         public IActionResult ChangeSubjectName(string newName)
         {

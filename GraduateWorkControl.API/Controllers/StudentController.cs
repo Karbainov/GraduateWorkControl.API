@@ -12,7 +12,7 @@ namespace GraduateWorkControl.API.Controllers
     [Route("[controller]")]
     public class StudentController : Controller
     {
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpGet(Name = "GetAllStudentsInfoForAdmin")]
         public IActionResult GetAllStudentsInfoForAdmin()
         {
@@ -21,7 +21,7 @@ namespace GraduateWorkControl.API.Controllers
                 new StudentInfoOutputModel()
                 {
                     Id = 1,
-                    FullName="Anton Antonovich",
+                    //FullName="Anton Antonovich",
                     Email = "Anton@Anton.Anton",
                     PhoneNumber="+999999999999",
                     GroupNumber="123112"
@@ -29,7 +29,7 @@ namespace GraduateWorkControl.API.Controllers
                 new StudentInfoOutputModel()
                 {
                     Id = 2,
-                    FullName="Boris Borisovich",
+                    //FullName="Boris Borisovich",
                     Email = "Boris@Boris.Boris",
                     GroupNumber="123112"
                 }
@@ -38,7 +38,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(a);
         }
 
-        [Authorize(Roles = "teacher")]
+        //[Authorize(Roles = "teacher")]
         [HttpGet("by-teacher/{teacherId}", Name = "GetAllStudentsInfoByTeacherId")]
         public IActionResult GetAllStudentsInfoByTeacherId(int teacherId)
         {
@@ -47,7 +47,7 @@ namespace GraduateWorkControl.API.Controllers
                 new StudentInfoOutputModel()
                 {
                     Id = 1,
-                    FullName="Anton Antonovich",
+                    //FullName="Anton Antonovich",
                     Email = "Anton@Anton.Anton",
                     PhoneNumber="+999999999999",
                     GroupNumber="123112"
@@ -55,7 +55,7 @@ namespace GraduateWorkControl.API.Controllers
                 new StudentInfoOutputModel()
                 {
                     Id = 2,
-                    FullName="Boris Borisovich",
+                    //FullName="Boris Borisovich",
                     Email = "Boris@Boris.Boris",
                     GroupNumber="123112"
                 }
@@ -64,14 +64,14 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(a);
         }
 
-        [Authorize(Roles = "admin, student")]
+        //[Authorize(Roles = "admin, student")]
         [HttpGet("{id}", Name = "GetFullStudentInfoById")]
         public IActionResult GetFullStudentInfoById(int id)
         {
             var a = new StudentFullInfoOutputModel()
             {
                 Id = id,
-                FullName = "Anton Antonovich",
+                //FullName = "Anton Antonovich",
                 Email = "Anton@Anton.Anton",
                 PhoneNumber = "+999999999999",
                 Password = "Aaaaa",
@@ -79,7 +79,7 @@ namespace GraduateWorkControl.API.Controllers
                 Teacher= new TeacherInfoOutputModel()
                 {
                     Id = 2,
-                    FullName = "Boris Borisovich",
+                    //FullName = "Boris Borisovich",
                     Email = "Boris@Boris.Boris",
                     Faculty = new FacultyOutputModel()
                     {
@@ -92,21 +92,20 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(a);
         }
 
-
         [HttpPost(Name = "AddStudent")]
         public IActionResult AddStudent(StudentRegistrationInfoInputModel student)
         {
             return Ok(10);
         }
 
-        [Authorize(Roles = "student")]
+        //[Authorize(Roles = "student")]
         [HttpPut("{id}", Name = "UpdateStudent")]
         public IActionResult UpdateStudent(StudentInfoInputModel student)
         {
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         [HttpDelete("{id}", Name = "DeleteStudentById")]
         public IActionResult DeleteStudentById(int id)
         {

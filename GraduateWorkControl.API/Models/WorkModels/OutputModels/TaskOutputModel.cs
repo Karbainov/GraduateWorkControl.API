@@ -1,4 +1,5 @@
 ﻿using GraduateWorkControl.API.Models.MaterialModels.OutputModels;
+using GraduateWorkControl.Core;
 
 namespace GraduateWorkControl.API.Models.WorkModels.OutputModels
 {
@@ -16,7 +17,7 @@ namespace GraduateWorkControl.API.Models.WorkModels.OutputModels
 
         public List<MaterialOutputModel> Materials { get; set; }
 
-        public TaskStatus Status { get; set; }
+        public TaskState State { get; set; }
 
         public List<CommentOutputModel> Comments { get; set; }
     }

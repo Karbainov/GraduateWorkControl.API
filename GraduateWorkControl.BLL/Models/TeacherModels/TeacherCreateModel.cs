@@ -1,11 +1,16 @@
-﻿using GraduateWorkControl.API.Models.OutputModels;
+﻿using GraduateWorkControl.DAL.Dtos;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace GraduateWorkControl.API.Models.TeacherModels.InputModels
+namespace GraduateWorkControl.BLL.Models.TeacherModels
 {
-    public class TeacherFullInfoInputModel
+    public class TeacherCreateModel
     {
-        public int Id { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -15,7 +20,6 @@ namespace GraduateWorkControl.API.Models.TeacherModels.InputModels
         public string? PhoneNumber { get; set; }
 
         public string Password { get; set; }
-
         public int FacultyId { get; set; }
 
         public List<int> SubjectsIds { get; set; }

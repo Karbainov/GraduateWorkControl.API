@@ -11,14 +11,14 @@ namespace GraduateWorkControl.API.Controllers
     public class ApplicationController : Controller
     {
 
-        [Authorize(Roles = "student")]
+        //[Authorize(Roles = "student")]
         [HttpPost(Name = "AddNewApplication")]
         public IActionResult AddNewApplication(NewApplicationInputModel application)
         {
             return Ok(10);
         }
 
-        [Authorize(Roles = "student")]
+        //[Authorize(Roles = "student")]
         [HttpGet("{studentId}", Name = "GetApplicationByStudentId")]
         public IActionResult GetApplicationByStudentId(int studentId) 
         {
@@ -34,7 +34,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(a);
         }
 
-        [Authorize(Roles = "teacher")]
+        //[Authorize(Roles = "teacher")]
         [HttpGet("teacher/{teacherId}", Name = "GetApplicationsByTeacherId")]
         public IActionResult GetApplicationsByTeacherId(int teacherId)
         {
@@ -53,14 +53,14 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(a);
         }
 
-        [Authorize(Roles = "teacher")]
+        //[Authorize(Roles = "teacher")]
         [HttpPut("teacher/{teacherId}/{applicationId}", Name= "AnswerApplicationByTeacher")]
         public IActionResult AnswerApplicationByTeacher(int applicationId, ApplicationState newState)
         {
             return Ok();
         }
 
-        [Authorize(Roles = "student")]
+        //[Authorize(Roles = "student")]
         [HttpPut("{studentId}", Name = "DeniedApplicationByStudent")]
         public IActionResult DeniedApplicationByStudent(int studentId)
         {

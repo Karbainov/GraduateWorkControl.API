@@ -1,6 +1,10 @@
-﻿using GraduateWorkControl.API.Models.StudentModels.OutputModels;
+﻿using AutoMapper;
+using GraduateWorkControl.API.Mappings;
+using GraduateWorkControl.API.Models.StudentModels.OutputModels;
 using GraduateWorkControl.API.Models.WorkModels.InputModels;
 using GraduateWorkControl.API.Models.WorkModels.OutputModels;
+using GraduateWorkControl.BLL;
+using GraduateWorkControl.BLL.Models.WorkModels;
 using GraduateWorkControl.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +16,19 @@ namespace GraduateWorkControl.API.Controllers
     [Route("[controller]")]
     public class WorkController : Controller
     {
+
+        Mapper _mapper;
+        WorkService _workService;
+
+        public WorkController()
+        {
+            _workService = new WorkService();
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile(new MappingWorkProfile());
+            });
+            _mapper = new Mapper(config);
+        }
+
         //[Authorize(Roles = "student, teacher")]
         [HttpGet("{studentId}",Name = "GetAllStudentsTasksById")]
         public IActionResult GetAllStudentsTasksById(int studentId)
@@ -30,7 +47,9 @@ namespace GraduateWorkControl.API.Controllers
         [HttpPost("{studentId}", Name = "AddTask")]
         public IActionResult AddTask(int studentId, TaskInputModel task)
         {
-            return Ok();
+            var t = _mapper.Map<TaskCreateModel>(task);
+            t.StudentId= studentId;
+            return Ok(_workService.AddTask(t));
         }
 
         //[Authorize(Roles = "teacher")]

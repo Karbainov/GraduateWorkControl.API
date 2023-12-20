@@ -24,5 +24,10 @@ namespace GraduateWorkControl.DAL
         {
             return _context.Teachers.Where(s => s.Id == id).Single();
         }
+
+        public TeacherDto? GetTeacherByLoginAndPassword(string login, string password) 
+        {
+            return _context.Teachers.Where(t => t.Email == login && t.Password == password).FirstOrDefault();
+        }
     }
 }

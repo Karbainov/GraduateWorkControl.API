@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using GraduateWorkControl.BLL.Mappings;
 using GraduateWorkControl.BLL.Models.StudentModels;
+using GraduateWorkControl.BLL.Models.TeacherModels;
 using GraduateWorkControl.DAL;
 using GraduateWorkControl.DAL.Dtos;
 using System;
@@ -29,6 +30,19 @@ namespace GraduateWorkControl.BLL
         {
             var s=_mapper.Map<StudentDto>(student);
             return _studentRepository.AddStudent(s);
+        }
+
+        public StudentModel? GetStudentByLoginAndPassword(string login, string pasword)
+        {
+            var t = _studentRepository.GetStudentByLoginAndPassword(login, pasword);
+            if (t == null)
+            {
+                return null;
+            }
+            else
+            {
+                return _mapper.Map<StudentModel>(t);
+            }
         }
     }
 }

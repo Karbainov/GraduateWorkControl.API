@@ -13,7 +13,8 @@ namespace GraduateWorkControl.BLL.Mappings
     {
         public MapperStudentProfile() 
         {
-            CreateMap<StudentCreateModel, StudentDto>();   
+            CreateMap<StudentCreateModel, StudentDto>();
+            CreateMap<StudentDto, StudentModel>();
         }
     }
 }

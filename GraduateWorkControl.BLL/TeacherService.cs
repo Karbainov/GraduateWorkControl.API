@@ -23,6 +23,7 @@ namespace GraduateWorkControl.BLL
             _optionsRepository=new OptionsRepository();
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile(new MapperTeacherProfile());
+                cfg.AddProfile(new MapperOptionsProfile());
             });
             _mapper = new Mapper(config);
         }
@@ -33,6 +34,19 @@ namespace GraduateWorkControl.BLL
             teacherDto.Faculty = _optionsRepository.GetFacultyById(teacher.FacultyId);
             teacherDto.Subjects = _optionsRepository.GetSubjectById(teacher.SubjectsIds);
             return _teacherRepository.AddTeacher(teacherDto);
+        }
+
+        public TeacherModel? GetTeacherByLoginAndPassword(string login, string pasword)
+        {
+            var t = _teacherRepository.GetTeacherByLoginAndPassword(login, pasword);
+            if (t == null)
+            {
+                return null;
+            }
+            else
+            {
+                return _mapper.Map<TeacherModel>(t);
+            }
         }
     }
 }

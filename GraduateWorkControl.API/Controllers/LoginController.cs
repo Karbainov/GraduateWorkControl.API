@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GraduateWorkControl.BLL;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -11,12 +12,21 @@ namespace GraduateWorkControl.API.Controllers
     [Route("[controller]")]
     public class LoginController : Controller
     {
+        private TeacherService _teacherService;
+        private StudentServise _studentServise;
+
+        public LoginController()
+        {
+            _teacherService = new TeacherService();
+            _studentServise= new StudentServise();
+        }
+
         [HttpPost(Name = "Login")]
         public IActionResult Login(string email, string password)
         {
             List<Claim> claims=null;
 
-            if (email == "admin")
+            if (email == "admin" && password=="admin")
             {
                 claims = new List<Claim>
                 {
@@ -24,23 +34,37 @@ namespace GraduateWorkControl.API.Controllers
                 new Claim(ClaimTypes.Role, "admin")
                 };
             }
-            else if (email == "teacher")
+            else 
             {
-                claims = new List<Claim>
+                var t = _teacherService.GetTeacherByLoginAndPassword(email, password);
+                if (t != null)
                 {
-                new Claim(ClaimTypes.Email, email),
-                new Claim(ClaimTypes.Role, "teacher")
-                };
-            }
-            else
-            {
-                claims = new List<Claim>
+                    claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Email, t.Email),
+                        new Claim(ClaimTypes.Role, "teacher"),
+                        new Claim("Id",t.Id.ToString())
+                    };
+                }
+                else
                 {
-                new Claim(ClaimTypes.Email, email),
-                new Claim(ClaimTypes.Role, "student")
-                };
+                    var s=_studentServise.GetStudentByLoginAndPassword(email,password);
+                    if(s != null)
+                    {
+                        claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Email, s.Email),
+                            new Claim(ClaimTypes.Role, "student"),
+                            new Claim("Id",s.Id.ToString())
+                        };
+                    }
+                }
             }
 
+            if (claims == null)
+            {
+                return NotFound("User not found");
+            }
 
             var jwt = new JwtSecurityToken(
                     issuer: AuthOptions.ISSUER,

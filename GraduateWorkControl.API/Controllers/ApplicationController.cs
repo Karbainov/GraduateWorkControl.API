@@ -27,7 +27,7 @@ namespace GraduateWorkControl.API.Controllers
             _mapper = new Mapper(config);
         }
 
-        //[Authorize(Roles = "student")]
+        [Authorize(Roles = "student")]
         [HttpPost(Name = "AddNewApplication")]
         public IActionResult AddNewApplication(NewApplicationInputModel application)
         {
@@ -35,7 +35,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_applicationService.AddApplication(_mapper.Map<ApplicationCreateModel>(application)));
         }
 
-        //[Authorize(Roles = "student")]
+        [Authorize(Roles = "student")]
         [HttpGet("{studentId}", Name = "GetApplicationByStudentId")]
         public IActionResult GetApplicationByStudentId(int studentId) 
         {
@@ -45,14 +45,14 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(s);
         }
 
-        //[Authorize(Roles = "teacher")]
+        [Authorize(Roles = "teacher")]
         [HttpGet("teacher/{teacherId}", Name = "GetApplicationsByTeacherId")]
         public IActionResult GetApplicationsByTeacherId(int teacherId)
         {
             return Ok(_mapper.Map<List<TeachersApplicationOutputModel>>(_applicationService.GetApplicationsByTeacherId(teacherId)));
         }
 
-        //[Authorize(Roles = "teacher")]
+        [Authorize(Roles = "teacher")]
         [HttpPut("teacher/{teacherId}/{applicationId}", Name= "AnswerApplicationByTeacher")]
         public IActionResult AnswerApplicationByTeacher(int applicationId, ApplicationState newState)
         {
@@ -60,7 +60,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "student")]
+        [Authorize(Roles = "student")]
         [HttpPut("{studentId}", Name = "DeniedApplicationByStudent")]
         public IActionResult DeniedApplicationByStudent(int studentId)
         {

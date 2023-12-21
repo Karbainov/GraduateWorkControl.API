@@ -14,7 +14,7 @@ namespace GraduateWorkControl.BLL.Mappings
         public MapperStudentProfile() 
         {
             CreateMap<StudentCreateModel, StudentDto>();
-            CreateMap<StudentDto, StudentModel>();
+            CreateMap<StudentDto, StudentModel>().ReverseMap();
         }
     }
 }

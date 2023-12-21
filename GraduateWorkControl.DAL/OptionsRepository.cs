@@ -42,5 +42,27 @@ namespace GraduateWorkControl.DAL
         {            
             return _context.Subjects.Where(s => ids.Contains(s.Id)).ToList();  
         }
+
+        public List<SubjectDto> GetAllSubjects()
+        {
+            return _context.Subjects.ToList();
+        }
+
+        public List<FacultyDto> GetAllFacultys()
+        {
+            return _context.Facultys.ToList();
+        }
+
+        public void UpdateSubject(int id, string name)
+        {
+            _context.Subjects.Where(s=>s.Id==id).Single().Name = name;
+            _context.SaveChanges();
+        }
+
+        public void UpdateFacuty(int id, string name)
+        {
+            _context.Facultys.Where(s => s.Id == id).Single().Name = name;
+            _context.SaveChanges();
+        }
     }
 }

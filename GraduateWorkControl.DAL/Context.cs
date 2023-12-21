@@ -30,7 +30,7 @@ namespace GraduateWorkControl.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=aaa;Trusted_Connection=True; TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=qqq;Trusted_Connection=True; TrustServerCertificate=True;");
         }
     }
 }

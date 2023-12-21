@@ -34,6 +34,9 @@ namespace GraduateWorkControl.DAL.Dtos
         [Required]
         public ICollection<SubjectDto>? Subjects { get; set; }
 
+        [Required]
+        public bool IsDeleted { get; set; }
+
         public List<StudentDto>? Students { get; set; }
 
         public List<ApplicationDto>? Applications { get; set; }

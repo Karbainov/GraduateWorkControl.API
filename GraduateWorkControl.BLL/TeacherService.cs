@@ -48,5 +48,38 @@ namespace GraduateWorkControl.BLL
                 return _mapper.Map<TeacherModel>(t);
             }
         }
+
+        public List<TeacherModel> GetAllTeachers()
+        {
+            return _mapper.Map<List<TeacherModel>>(_teacherRepository.GetAllTeachers());
+        }
+
+        public void UpdateTeacher(TeacherModel teacher)
+        {
+            _teacherRepository.UpdateTeacher(_mapper.Map<TeacherDto>(teacher));
+        }
+
+        public void UpdateFullTeacher(TeacherFullUpdateModel teacher)
+        {
+            var t = _mapper.Map<TeacherDto>(teacher);
+            t.Faculty = _optionsRepository.GetFacultyById(teacher.FacultyId);
+            t.Subjects = _optionsRepository.GetSubjectById(teacher.SubjectsIds);
+            _teacherRepository.UpdateFullTeacher(t);
+        }
+
+        public TeacherModel GetTeacherById(int id)
+        {
+            return _mapper.Map<TeacherModel>(_teacherRepository.GetTeacherById(id));
+        }
+
+        public void DeleteTeacherById(int id) 
+        {
+            _teacherRepository.DeleteTeacheById(id);
+        }
+
+        public List<TeacherModel> GetTeachersByFacultyAndSubjects(string faculty, string subject)
+        {
+            return _mapper.Map<List<TeacherModel>>(_teacherRepository.GetTeachersByFacultyAndSubjects(faculty, subject));
+        }
     }
 }

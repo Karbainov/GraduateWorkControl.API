@@ -25,6 +25,7 @@ namespace GraduateWorkControl.API.Controllers
             _studentServise=new StudentServise();
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile(new MappingStudentProfile());
+                cfg.AddProfile(new MappingTeacherProfile());
             });
             _mapper = new Mapper(config);
         }
@@ -32,80 +33,25 @@ namespace GraduateWorkControl.API.Controllers
         [HttpGet(Name = "GetAllStudentsInfoForAdmin")]
         public IActionResult GetAllStudentsInfoForAdmin()
         {
-            var a = new List<StudentInfoOutputModel>()
-            {
-                new StudentInfoOutputModel()
-                {
-                    Id = 1,
-                    //FullName="Anton Antonovich",
-                    Email = "Anton@Anton.Anton",
-                    PhoneNumber="+999999999999",
-                    GroupNumber="123112"
-                },
-                new StudentInfoOutputModel()
-                {
-                    Id = 2,
-                    //FullName="Boris Borisovich",
-                    Email = "Boris@Boris.Boris",
-                    GroupNumber="123112"
-                }
-            };
-
-            return Ok(a);
+            return Ok(_mapper.Map<List<StudentInfoOutputModel>>(_studentServise.GetAllStudents()));
         }
 
         //[Authorize(Roles = "teacher")]
         [HttpGet("by-teacher/{teacherId}", Name = "GetAllStudentsInfoByTeacherId")]
         public IActionResult GetAllStudentsInfoByTeacherId(int teacherId)
         {
-            var a = new List<StudentInfoOutputModel>()
-            {
-                new StudentInfoOutputModel()
-                {
-                    Id = 1,
-                    //FullName="Anton Antonovich",
-                    Email = "Anton@Anton.Anton",
-                    PhoneNumber="+999999999999",
-                    GroupNumber="123112"
-                },
-                new StudentInfoOutputModel()
-                {
-                    Id = 2,
-                    //FullName="Boris Borisovich",
-                    Email = "Boris@Boris.Boris",
-                    GroupNumber="123112"
-                }
-            };
-
-            return Ok(a);
+            var s=_studentServise.GetStudentsByTeacherId(teacherId);
+            
+            return Ok(_mapper.Map<List<StudentInfoOutputModel>>(s));
         }
 
         //[Authorize(Roles = "admin, student")]
         [HttpGet("{id}", Name = "GetFullStudentInfoById")]
         public IActionResult GetFullStudentInfoById(int id)
         {
-            var a = new StudentFullInfoOutputModel()
-            {
-                Id = id,
-                //FullName = "Anton Antonovich",
-                Email = "Anton@Anton.Anton",
-                PhoneNumber = "+999999999999",
-                Password = "Aaaaa",
-                GroupNumber="sadas",
-                Teacher= new TeacherInfoOutputModel()
-                {
-                    Id = 2,
-                    //FullName = "Boris Borisovich",
-                    Email = "Boris@Boris.Boris",
-                    Faculty = new FacultyOutputModel()
-                    {
-                        Id = 2,
-                        Name ="Programming"
-                    }
-                }
-            };
+            var s=_studentServise.GetStudentById(id);
 
-            return Ok(a);
+            return Ok(_mapper.Map<StudentFullInfoOutputModel>(s));
         }
 
         [HttpPost(Name = "AddStudent")]
@@ -119,6 +65,7 @@ namespace GraduateWorkControl.API.Controllers
         [HttpPut("{id}", Name = "UpdateStudent")]
         public IActionResult UpdateStudent(StudentInfoInputModel student)
         {
+            _studentServise.UpdateStudent(_mapper.Map<StudentModel>(student));
             return Ok();
         }
 
@@ -126,6 +73,7 @@ namespace GraduateWorkControl.API.Controllers
         [HttpDelete("{id}", Name = "DeleteStudentById")]
         public IActionResult DeleteStudentById(int id)
         {
+            _studentServise.DeleteStudent(id);
             return Ok();
         }
     }

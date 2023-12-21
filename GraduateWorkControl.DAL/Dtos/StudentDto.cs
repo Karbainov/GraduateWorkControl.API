@@ -31,6 +31,8 @@ namespace GraduateWorkControl.DAL.Dtos
         [AllowNull]
         public string? PhoneNumber { get; set; }
 
+        [Required]
+        public bool IsDelited {  get; set; } 
 
         public List<ApplicationDto>? Application { get; set; }
 

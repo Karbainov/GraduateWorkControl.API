@@ -22,6 +22,7 @@ namespace GraduateWorkControl.API.Controllers
             _teacherService = new TeacherService();
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile(new MappingTeacherProfile());
+                cfg.AddProfile(new MappingOptionsProfile());
             });
             _mapper = new Mapper(config);
         }
@@ -30,102 +31,20 @@ namespace GraduateWorkControl.API.Controllers
         [HttpGet(Name = "GetAllTeachersInfoForAdmin")]
         public IActionResult GetAllTeachersInfoForAdmin()
         {
-            var a = new List<TeacherInfoOutputModel>()
-            { 
-                new TeacherInfoOutputModel()
-                {
-                    Id = 1,
-                    //FullName="Anton Antonovich",
-                    Email = "Anton@Anton.Anton",
-                    PhoneNumber="+999999999999",
-                    Faculty=new FacultyOutputModel()
-                    {
-                        Id=1,
-                        Name="Programming"
-                    }
-                },
-                new TeacherInfoOutputModel()
-                {
-                    Id = 2,
-                    //FullName="Boris Borisovich",
-                    Email = "Boris@Boris.Boris",
-                    Faculty=new FacultyOutputModel()
-                    {
-                        Id=2,
-                        Name="Phisics"
-                    }
-                }
-            };
-
-            return Ok(a);
+            return Ok(_mapper.Map<List<TeacherInfoOutputModel>>(_teacherService.GetAllTeachers()));
         }
 
         //[Authorize(Roles = "admin, teacher")]
         [HttpGet("{id}",Name = "GetFullTeacherInfoById")]
         public IActionResult GetFullTeacherInfoById(int id)
         {
-            var a=new TeacherFullInfoOutputModel() 
-            { 
-                Id = id,
-                ////FullName="Anton Antonovich",
-                Email = "Anton@Anton.Anton",
-                PhoneNumber="+999999999999",
-                Password="Aaaaa",
-                Faculty=new FacultyOutputModel()
-                {
-                    Id=1,
-                    Name="Programming"
-                },
-                Subjects = new List<SubjectOutputModel>
-                {
-                    new SubjectOutputModel()
-                    {
-                        Id=1,
-                        Name="OOP"
-                    },
-                    new SubjectOutputModel()
-                    {
-                        Id=2,
-                        Name="DB"
-                    }
-                }
-            };
-
-            return Ok(a);
+            return Ok(_mapper.Map<TeacherFullInfoOutputModel>(_teacherService.GetTeacherById(id)));
         }
 
         [HttpGet("application", Name = "GetTeachersByFacultyAndSubject")]
-        public IActionResult GetTeachersByFacultyAndSubject(TeachersFacultyAndSubjectInputModel facultyAndSubject)
+        public IActionResult GetTeachersByFacultyAndSubject([FromQuery] TeachersFacultyAndSubjectInputModel facultyAndSubject)
         {
-
-            var a = new List<TeacherInfoOutputModel>()
-            {
-                new TeacherInfoOutputModel()
-                {
-                    Id = 1,
-                    //FullName="Anton Antonovich",
-                    Email = "Anton@Anton.Anton",
-                    PhoneNumber="+999999999999",
-                    Faculty=new FacultyOutputModel()
-                    {
-                        Id=1,
-                        Name=facultyAndSubject.FacultyName
-                    }
-                },
-                new TeacherInfoOutputModel()
-                {
-                    Id = 2,
-                    //FullName="Boris Borisovich",
-                    Email = "Boris@Boris.Boris",
-                    Faculty=new FacultyOutputModel()
-                    {
-                        Id=2,
-                        Name=facultyAndSubject.FacultyName
-                    }
-                }
-            };
-
-            return Ok(a);
+            return Ok(_mapper.Map<List<TeacherInfoOutputModel>>(_teacherService.GetTeachersByFacultyAndSubjects(facultyAndSubject.FacultyName, facultyAndSubject.SubjectName)));
         }
 
         //[Authorize(Roles = "admin")]
@@ -140,6 +59,7 @@ namespace GraduateWorkControl.API.Controllers
         [HttpPut("{id}", Name = "UpdateTeacherByAdmin")]
         public IActionResult UpdateTeacherByAdmin(TeacherFullInfoInputModel teacher)
         {
+            _teacherService.UpdateFullTeacher(_mapper.Map<TeacherFullUpdateModel>(teacher));
             return Ok();
         }
 
@@ -147,6 +67,7 @@ namespace GraduateWorkControl.API.Controllers
         [HttpPut(Name = "UpdateTeacherByUser")]
         public IActionResult UpdateTeacherByUser(TeacherShortInfoInputModel teacher)
         {
+            _teacherService.UpdateTeacher(_mapper.Map<TeacherModel>(teacher));
             return Ok();
         }
 
@@ -154,6 +75,7 @@ namespace GraduateWorkControl.API.Controllers
         [HttpDelete("{id}",Name = "DeleteTeacherById")]
         public IActionResult DeleteTeacherById(int id)
         {
+            _teacherService.DeleteTeacherById(id);
             return Ok();
         }
     }

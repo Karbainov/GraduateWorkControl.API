@@ -1,4 +1,6 @@
-﻿using GraduateWorkControl.API.Models.OutputModels;
+﻿using AutoMapper;
+using GraduateWorkControl.API.Mappings;
+using GraduateWorkControl.API.Models.OutputModels;
 using GraduateWorkControl.API.Models.TeacherModels.InputModels;
 using GraduateWorkControl.API.Models.TeacherModels.OutputModels;
 using GraduateWorkControl.BLL;
@@ -12,56 +14,28 @@ namespace GraduateWorkControl.API.Controllers
     public class OptionsController : Controller
     {
         private OptionsService _optionsService;
-
+        private Mapper _mapper;
         public OptionsController()
         {
             _optionsService = new OptionsService();
+            var config = new MapperConfiguration(cfg => {
+                cfg.AddProfile(new MappingOptionsProfile());
+            });
+            _mapper = new Mapper(config);
         }
 
         //[Authorize]
         [HttpGet("faculty", Name = "GetAllFacultys")]
         public IActionResult GetAllFacultys()
         {
-            var a = new List<FacultyOutputModel>()
-            {
-                new FacultyOutputModel()
-                {
-                    Id = 1,
-                    Name = "Pragramming"
-                },
-                new FacultyOutputModel()
-                {
-                    Id = 2,
-                    Name = "Phisics"
-                },
-            };
-            return Ok(a);
+            return Ok(_mapper.Map<List<FacultyOutputModel>>(_optionsService.GetAllFacultys()));
         }
 
         //[Authorize]
         [HttpGet("subject", Name = "GetAllSubjects")]
         public IActionResult GetAllSubjects()
         {
-            var a = new List<SubjectOutputModel>()
-            {
-                new SubjectOutputModel()
-                {
-                    Id = 1,
-                    Name = "Pragramming"
-                },
-                new SubjectOutputModel()
-                {
-                    Id = 2,
-                    Name = "Math"
-                },
-                new SubjectOutputModel()
-                {
-                    Id = 3,
-                    Name = "OOP"
-                },
-
-            };
-            return Ok(a);
+            return Ok(_mapper.Map<List<SubjectOutputModel>>(_optionsService.GetAllSubjects()));
         }
 
         //[Authorize(Roles = "admin")]
@@ -80,16 +54,18 @@ namespace GraduateWorkControl.API.Controllers
 
         //[Authorize(Roles = "admin")]
         [HttpPut ("faculty/{id}", Name = "ChangeFacultyName")]
-        public IActionResult ChangeFacultyName(string newName)
+        public IActionResult ChangeFacultyName(int id, string newName)
         {
-            return Ok(10);
+            _optionsService.UpdateFaculty(id, newName);
+            return Ok();
         }
 
         //[Authorize(Roles = "admin")]
         [HttpPut("subject/{id}", Name = "ChangeSubjectName")]
-        public IActionResult ChangeSubjectName(string newName)
+        public IActionResult ChangeSubjectName(int id, string newName)
         {
-            return Ok(10);
+            _optionsService.UpdateSubject(id, newName);
+            return Ok();
         }
     }
 }

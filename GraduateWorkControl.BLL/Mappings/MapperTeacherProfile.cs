@@ -14,7 +14,8 @@ namespace GraduateWorkControl.BLL.Mappings
        public MapperTeacherProfile() 
         {
             CreateMap<TeacherCreateModel, TeacherDto>();
-            CreateMap<TeacherDto, TeacherModel>();
+            CreateMap<TeacherDto, TeacherModel>().ReverseMap();
+            CreateMap<TeacherFullUpdateModel, TeacherDto>().ReverseMap();
         }
 
     }

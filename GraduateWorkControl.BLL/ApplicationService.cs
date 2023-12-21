@@ -29,6 +29,7 @@ namespace GraduateWorkControl.BLL
                 cfg.AddProfile(new MapperApplicationProfile());
                 cfg.AddProfile(new MapperStudentProfile());
                 cfg.AddProfile(new MapperTeacherProfile());
+                cfg.AddProfile(new MapperOptionsProfile());
             });
             _mapper = new Mapper(config);
         }

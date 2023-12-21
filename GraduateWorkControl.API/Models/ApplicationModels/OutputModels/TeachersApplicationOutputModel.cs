@@ -7,7 +7,7 @@ namespace GraduateWorkControl.API.Models.ApplicationModels.OutputModels
     {
         public int Id { get; set; }
 
-        public StudentInfoOutputModel StudentInfo { get; set; }
+        public StudentInfoOutputModel Student { get; set; }
 
         public ApplicationState ApplicationState { get; set; }
 

@@ -1,4 +1,6 @@
-﻿using GraduateWorkControl.DAL.Dtos;
+﻿using GraduateWorkControl.Core;
+using GraduateWorkControl.DAL.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,43 @@ namespace GraduateWorkControl.DAL
 
         public int AddApplication(ApplicationDto application)
         {
+            application.ApplicationState = Core.ApplicationState.Сonsideration;
             _context.Applications.Add(application);
             _context.SaveChanges(); 
             return application.Id;
+        }
+        
+        public ApplicationDto GetApplicationByUserId(int userId)
+        {
+            var s = _context.Applications.Include(a => a.Student).Include(a => a.Teacher).Where(a => a.Student.Id == userId).ToList();
+            return s[s.Count-1];
+        }
+
+        public List<ApplicationDto> GetApplicationsByTeacherId(int teacherId) 
+        {
+            return _context.Applications.Include(a => a.Student).Include(a => a.Teacher).Where(a => a.Teacher.Id == teacherId && a.ApplicationState==Core.ApplicationState.Сonsideration).ToList();
+        }
+
+        public void DeniedApplicationByStudent(int studentId)
+        {
+            var a = _context.Applications.Include(a => a.Student).Where(a => a.Student.Id == studentId).FirstOrDefault();
+            if (a != null)
+            {
+                a.ApplicationState = Core.ApplicationState.DeniedByStydent;
+            }
+            _context.SaveChanges();
+        }
+
+        public void AnswerApplicationByTeacher(int applicationId, ApplicationState newState)
+        {
+            var a = _context.Applications.Include(a => a.Student).Include(a => a.Teacher).Where(a => a.Id == applicationId).FirstOrDefault();
+            if (a != null)
+            {
+                a.ApplicationState= newState;
+                a.Student.Teacher = a.Teacher;
+            }
+
+            _context.SaveChanges();
         }
     }
 }

@@ -26,6 +26,7 @@ namespace GraduateWorkControl.API.Controllers
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile(new MappingStudentProfile());
                 cfg.AddProfile(new MappingTeacherProfile());
+                cfg.AddProfile(new MappingOptionsProfile());
             });
             _mapper = new Mapper(config);
         }

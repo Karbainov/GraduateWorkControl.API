@@ -14,6 +14,7 @@ namespace GraduateWorkControl.BLL.Mappings
         public MapperApplicationProfile() 
         {
             CreateMap<ApplicationCreateModel, ApplicationDto>();
+            CreateMap<ApplicationDto, ApplicationModel>();
         }
     }
 }

@@ -74,11 +74,30 @@ namespace GraduateWorkControl.DAL
             _context.SaveChanges();
         }
 
-        public List<TeacherDto> GetTeachersByFacultyAndSubjects(string faculty, string subject)
+        public List<TeacherDto> GetTeachersByFacultyAndSubjects(int? faculty, List<int>? subject)
         {
-            var ans= _context.Teachers.Include(t => t.Subjects).Include(t => t.Faculty)
-                .Where(t => (t.Faculty.Name.ToLower() == faculty.ToLower() || t.Subjects.Where(s => s.Name.ToLower() == subject.ToLower()).Count() > 0) && !t.IsDeleted).ToList();
-            return ans;
+            if (faculty != null && subject != null && subject.Count > 0)
+            {
+                var ans = _context.Teachers.Include(t => t.Subjects).Include(t => t.Faculty)
+                    .Where(t => (t.Faculty.Id == faculty && t.Subjects.Where(s => subject.Contains(s.Id)).Count() > 0) && !t.IsDeleted).ToList();
+                return ans;
+            }
+            else if(faculty != null)
+            {
+                var ans = _context.Teachers.Include(t => t.Subjects).Include(t => t.Faculty)
+                    .Where(t => (t.Subjects.Where(s => subject.Contains(s.Id)).Count() > 0) && !t.IsDeleted).ToList();
+                return ans;
+            }
+            else if(subject != null && subject.Count > 0)
+            {
+                var ans = _context.Teachers.Include(t => t.Subjects).Include(t => t.Faculty)
+                    .Where(t => (t.Faculty.Id == faculty) && !t.IsDeleted).ToList();
+                return ans;
+            }
+            else
+            {
+                return new List<TeacherDto> { };
+            }
         }
 
     }

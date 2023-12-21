@@ -2,8 +2,8 @@
 {
     public class TeachersFacultyAndSubjectInputModel
     {
-        public string? FacultyName { get; set; }
+        public int? FacultyName { get; set; }
 
-        public string? SubjectName { get; set; }
+        public List<int>? SubjectName { get; set; }
     }
 }

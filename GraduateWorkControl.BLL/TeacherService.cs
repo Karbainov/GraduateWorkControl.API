@@ -77,7 +77,7 @@ namespace GraduateWorkControl.BLL
             _teacherRepository.DeleteTeacheById(id);
         }
 
-        public List<TeacherModel> GetTeachersByFacultyAndSubjects(string faculty, string subject)
+        public List<TeacherModel> GetTeachersByFacultyAndSubjects(int? faculty, List<int>? subject)
         {
             return _mapper.Map<List<TeacherModel>>(_teacherRepository.GetTeachersByFacultyAndSubjects(faculty, subject));
         }

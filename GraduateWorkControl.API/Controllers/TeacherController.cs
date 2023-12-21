@@ -27,7 +27,7 @@ namespace GraduateWorkControl.API.Controllers
             _mapper = new Mapper(config);
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin, student")]
         [HttpGet(Name = "GetAllTeachersInfoForAdmin")]
         public IActionResult GetAllTeachersInfoForAdmin()
         {

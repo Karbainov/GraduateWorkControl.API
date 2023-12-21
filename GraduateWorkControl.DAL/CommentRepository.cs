@@ -17,5 +17,15 @@ namespace GraduateWorkControl.DAL
             _context.SaveChanges();
             return comment.Id;
         }
+
+        public void DeleteComment(int id)
+        {
+            var c= _context.Comments.Where(c => c.Id == id).FirstOrDefault();
+            if (c != null)
+            {
+                _context.Comments.Remove(c);
+            }
+            _context.SaveChanges();
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace GraduateWorkControl.DAL
 
         public TaskDto GetTaskById(int id) 
         {
-            return _context.Task.Where(t => t.Id == id).FirstOrDefault();
+            return _context.Task.Include(t=>t.Comments).ThenInclude(c=>c.Teacher).Include(t => t.Comments).ThenInclude(c => c.Student).Where(t => t.Id == id).FirstOrDefault();
         }
 
         public List<TaskDto> GetAllTasksByStudentId(int id)
@@ -61,6 +61,16 @@ namespace GraduateWorkControl.DAL
                 t.State= taskState;
             }
             _context.SaveChanges();
+        }
+
+        public TeacherDto GetTeacherFromTask(int id)
+        {
+            return _context.Task.Include(t => t.Student).Include(t => t.Student.Teacher).Where(t => t.Id == id).FirstOrDefault().Student.Teacher;
+        }
+
+        public StudentDto GetStudentFromTask(int id)
+        {
+            return _context.Task.Include(t => t.Student).Where(t => t.Id == id).FirstOrDefault().Student;
         }
     }
 }

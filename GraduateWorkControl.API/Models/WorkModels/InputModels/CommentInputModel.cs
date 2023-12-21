@@ -6,6 +6,6 @@ namespace GraduateWorkControl.API.Models.WorkModels.InputModels
     {
         public string? Comment { get; set; }
 
-        public List<int> MaterialsIds { get; set; }
+        public List<int>? MaterialsIds { get; set; }
     }
 }

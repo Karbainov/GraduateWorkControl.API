@@ -30,10 +30,10 @@ namespace GraduateWorkControl.DAL.Dtos
         [EnumDataType(typeof(TaskState))]
         public TaskState State { get; set; }
 
-        public ICollection<CommentDto>? Comments { get; set; }
+        public List<CommentDto>? Comments { get; set; }
 
         public StudentDto? Student { get; set; }
 
-        public ICollection<MaterialDto>? Materials { get; set; }
+        public List<MaterialDto>? Materials { get; set; }
     }
 }

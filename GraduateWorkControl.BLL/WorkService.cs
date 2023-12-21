@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +30,9 @@ namespace GraduateWorkControl.BLL
             _commentRepository = new CommentRepository();
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile(new MapperWorkProfile());
+                cfg.AddProfile(new MapperStudentProfile());
+                cfg.AddProfile(new MapperTeacherProfile());
+                cfg.AddProfile(new MapperOptionsProfile());
             });
             _mapper = new Mapper(config);
         }
@@ -65,5 +69,26 @@ namespace GraduateWorkControl.BLL
             _taskRepository.ChangeTaskState(id, taskState);
         }
 
+        public int AddComment(CommentCreateModel comment)
+        {
+            var c = _mapper.Map<CommentDto>(comment);
+            c.Task = _taskRepository.GetTaskById(comment.TaskId);
+
+            if((bool)comment.IsTeacher)
+            {
+                c.Teacher= _taskRepository.GetTeacherFromTask(comment.TaskId);
+            }
+            else
+            {
+                c.Student=_taskRepository.GetStudentFromTask(comment.TaskId);
+            }
+
+            return _commentRepository.AddComment(c);
+        }
+
+        public void DeleteComment(int id)
+        {
+            _commentRepository.DeleteComment(id);
+        }
     }
 }

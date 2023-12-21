@@ -63,7 +63,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_studentServise.AddStudent(s));
         }
 
-        [Authorize(Roles = "student")]
+
         [HttpPut("{id}", Name = "UpdateStudent")]
         public IActionResult UpdateStudent(StudentInfoInputModel student)
         {

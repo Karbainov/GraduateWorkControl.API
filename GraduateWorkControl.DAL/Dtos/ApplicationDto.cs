@@ -26,10 +26,8 @@ namespace GraduateWorkControl.DAL.Dtos
         [AllowNull]
         public string? CoveringLetter { get; set; }
 
-        [Required]
         public StudentDto? Student { get; set; }
 
-        [Required]
         public TeacherDto? Teacher { get; set; }
     }
 }

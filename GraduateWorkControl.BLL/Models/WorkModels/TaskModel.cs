@@ -1,4 +1,7 @@
-﻿using GraduateWorkControl.Core;
+﻿using GraduateWorkControl.BLL.Models.MaterialModels;
+using GraduateWorkControl.BLL.Models.StudentModels;
+using GraduateWorkControl.Core;
+using GraduateWorkControl.DAL.Dtos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,33 +10,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GraduateWorkControl.DAL.Dtos
+namespace GraduateWorkControl.BLL.Models.WorkModels
 {
-    public class TaskDto
+    public class TaskModel
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
         public int Number { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
-        [AllowNull]
         public string? Deadline { get; set; }
 
-        [AllowNull]
         public string? Description { get; set; }
 
-        [Required]
-        [EnumDataType(typeof(TaskState))]
         public TaskState State { get; set; }
 
-        public ICollection<CommentDto>? Comments { get; set; }
+        public List<CommentModel>? Comments { get; set; }
 
-        public StudentDto? Student { get; set; }
+        public StudentModel? Student { get; set; }
 
-        public ICollection<MaterialDto>? Materials { get; set; }
+        public List<MaterialModel>? Materials { get; set; }
     }
 }

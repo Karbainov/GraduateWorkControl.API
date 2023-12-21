@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using GraduateWorkControl.BLL.Mappings;
 using GraduateWorkControl.BLL.Models.WorkModels;
+using GraduateWorkControl.Core;
 using GraduateWorkControl.DAL;
 using GraduateWorkControl.DAL.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +40,30 @@ namespace GraduateWorkControl.BLL
             return _taskRepository.AddTask(t);
         }
 
+        public TaskModel GetTaskById(int id)
+        {
+            return _mapper.Map<TaskModel>(_taskRepository.GetTaskById(id));
+        }
 
+        public List<TaskModel> GetAllTasksByStudentId(int id)
+        {
+            return _mapper.Map < List<TaskModel> > (_taskRepository.GetAllTasksByStudentId(id));
+        }
+
+        public void UpdateTask(TaskUpdateModel task)
+        {
+            _taskRepository.UpdateTask(_mapper.Map<TaskDto>(task));
+        }
+
+        public void DeleteTask(int id)
+        {
+            _taskRepository.DeleteTask(id);
+        }
+
+        public void ChangeTaskState(int id, TaskState taskState)
+        {
+            _taskRepository.ChangeTaskState(id, taskState);
+        }
 
     }
 }

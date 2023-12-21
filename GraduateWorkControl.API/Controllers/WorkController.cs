@@ -33,14 +33,14 @@ namespace GraduateWorkControl.API.Controllers
         [HttpGet("{studentId}",Name = "GetAllStudentsTasksById")]
         public IActionResult GetAllStudentsTasksById(int studentId)
         {
-           return Ok(new List<TaskShortOutputModel>());
+           return Ok(_mapper.Map<TaskShortOutputModel>(_workService.GetAllTasksByStudentId(studentId)));
         }
 
         //[Authorize(Roles = "student, teacher")]
         [HttpGet("{studentId}/{taskId}", Name = "GetTaskById")]
         public IActionResult GetTaskById(int taskId)
         {
-            return Ok(new TaskOutputModel());
+            return Ok(_mapper.Map<TaskOutputModel>(_workService.GetTaskById(taskId)));
         }
 
         //[Authorize(Roles = "teacher")]
@@ -56,6 +56,9 @@ namespace GraduateWorkControl.API.Controllers
         [HttpPut("{studentId}/{taskId}", Name = "UpdateTask")]
         public IActionResult UpdateTask(int taskId, TaskInputModel task)
         {
+            var t=_mapper.Map<TaskUpdateModel>(task);
+            t.Id= taskId;
+            _workService.UpdateTask(t);
             return Ok();
         }
 
@@ -63,6 +66,7 @@ namespace GraduateWorkControl.API.Controllers
         [HttpDelete("{studentId}/{taskId}", Name = "DeleteTask")]
         public IActionResult DeleteTask(int taskId)
         {
+            _workService.DeleteTask(taskId);
             return Ok();
         }
 
@@ -70,6 +74,7 @@ namespace GraduateWorkControl.API.Controllers
         [HttpPut("{studentId}/{taskId}/state", Name = "UpdateTaskState")]
         public IActionResult UpdateTaskState(int taskId, TaskState state)
         {
+            _workService.ChangeTaskState(taskId, state);
             return Ok();
         }
 
@@ -77,6 +82,7 @@ namespace GraduateWorkControl.API.Controllers
         [HttpPut("{studentId}/{taskId}/review", Name = "UpdateTaskStateToReview")]
         public IActionResult UpdateTaskStateToReview(int taskId)
         {
+            _workService.ChangeTaskState(taskId, TaskState.Review);
             return Ok();
         }
 

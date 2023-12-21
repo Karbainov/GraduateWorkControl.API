@@ -1,4 +1,6 @@
-﻿using GraduateWorkControl.DAL.Dtos;
+﻿using GraduateWorkControl.Core;
+using GraduateWorkControl.DAL.Dtos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +18,49 @@ namespace GraduateWorkControl.DAL
             _context.Task.Add(task);
             _context.SaveChanges();
             return task.Id;
+        }
+
+        public TaskDto GetTaskById(int id) 
+        {
+            return _context.Task.Where(t => t.Id == id).FirstOrDefault();
+        }
+
+        public List<TaskDto> GetAllTasksByStudentId(int id)
+        {
+            return _context.Task.Include(t=>t.Student).Where(t=>t.Student.Id==id).ToList();
+        }
+
+        public void UpdateTask(TaskDto task)
+        {
+            var t=_context.Task.Where(t => t.Id == task.Id).FirstOrDefault();
+            if(t!=null)
+            {
+                t.Number = task.Number;
+                t.Name = task.Name;
+                t.Description = task.Description;
+                t.Number= task.Number;
+            }
+            _context.SaveChanges();
+        }
+
+        public void DeleteTask(int id)
+        {
+            var t = _context.Task.Where(t => t.Id == id).FirstOrDefault();
+            if (t != null)
+            {
+                _context.Remove(t);
+            }
+            _context.SaveChanges();
+        }
+
+        public void ChangeTaskState(int id, TaskState taskState)
+        {
+            var t=_context.Task.Where(t => t.Id == id).FirstOrDefault();
+            if (t!=null)
+            {
+                t.State= taskState;
+            }
+            _context.SaveChanges();
         }
     }
 }

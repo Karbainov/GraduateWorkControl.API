@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GraduateWorkControl.BLL.Models.MaterialModels;
 using GraduateWorkControl.BLL.Models.WorkModels;
 using GraduateWorkControl.DAL.Dtos;
 using System;
@@ -15,6 +16,10 @@ namespace GraduateWorkControl.BLL.Mappings
         {
             CreateMap<TaskCreateModel, TaskDto>();
             CreateMap<CommentCreateModel, CommentDto>();
+            CreateMap<TaskDto, TaskModel>().ReverseMap();
+            CreateMap<CommentDto,CommentModel>().ReverseMap();
+            CreateMap<MaterialDto, MaterialModel>().ReverseMap();
+            CreateMap<TaskUpdateModel, TaskDto>().ReverseMap();
         }
     }
 }

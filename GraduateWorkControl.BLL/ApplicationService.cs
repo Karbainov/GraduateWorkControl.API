@@ -22,9 +22,10 @@ namespace GraduateWorkControl.BLL
         public ApplicationService()
         {
             _applicationRepository = new ApplicationRepository();
-            _studentRepository=new StudentRepository();
+            _studentRepository = new StudentRepository();
             _teacherRepository = new TeacherRepository();
-            var config = new MapperConfiguration(cfg => {
+            var config = new MapperConfiguration(cfg =>
+            {
                 cfg.AddProfile(new MapperApplicationProfile());
                 cfg.AddProfile(new MapperStudentProfile());
                 cfg.AddProfile(new MapperTeacherProfile());
@@ -34,9 +35,9 @@ namespace GraduateWorkControl.BLL
 
         public int AddApplication(ApplicationCreateModel application)
         {
-            var ap=_mapper.Map<ApplicationDto>(application);
-            ap.Student =_studentRepository.GetStudentById(application.StudentId);
-            ap.Teacher =_teacherRepository.GetTeacherById(application.TeacherId);
+            var ap = _mapper.Map<ApplicationDto>(application);
+            ap.Student = _studentRepository.GetStudentById(application.StudentId);
+            ap.Teacher = _teacherRepository.GetTeacherById(application.TeacherId);
             return _applicationRepository.AddApplication(ap);
         }
 

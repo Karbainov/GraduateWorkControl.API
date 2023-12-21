@@ -29,7 +29,7 @@ namespace GraduateWorkControl.API.Controllers
                 cfg.AddProfile(new MappingWorkProfile());
                 cfg.AddProfile(new MappingStudentProfile());
                 cfg.AddProfile(new MappingTeacherProfile());
-                cfg.AddProfile(new MapperOptionsProfile());
+                cfg.AddProfile(new MappingOptionsProfile());
 
             });
             _mapper = new Mapper(config);

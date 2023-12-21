@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GraduateWorkControl.BLL.Mappings;
+using GraduateWorkControl.BLL.Models.MaterialModels;
 using GraduateWorkControl.BLL.Models.WorkModels;
 using GraduateWorkControl.Core;
 using GraduateWorkControl.DAL;
@@ -20,6 +21,7 @@ namespace GraduateWorkControl.BLL
         private StudentRepository _studentRepository;
         private TaskRepository _taskRepository;
         private CommentRepository _commentRepository;
+        private MaterialsRepository _materialsRepository;
         private Mapper _mapper;
 
         public WorkService()
@@ -27,6 +29,7 @@ namespace GraduateWorkControl.BLL
             _teacherRepository = new TeacherRepository();
             _studentRepository = new StudentRepository();
             _taskRepository = new TaskRepository();
+            _materialsRepository = new MaterialsRepository();
             _commentRepository = new CommentRepository();
             var config = new MapperConfiguration(cfg => {
                 cfg.AddProfile(new MapperWorkProfile());
@@ -41,6 +44,10 @@ namespace GraduateWorkControl.BLL
         {
             var t=_mapper.Map<TaskDto>(task);
             t.Student = _studentRepository.GetStudentById(task.StudentId);
+            if (task.MaterialsIds != null && task.MaterialsIds.Count > 0)
+            {
+                t.Materials = _materialsRepository.GetAll(task.MaterialsIds);
+            }
             return _taskRepository.AddTask(t);
         }
 
@@ -83,12 +90,27 @@ namespace GraduateWorkControl.BLL
                 c.Student=_taskRepository.GetStudentFromTask(comment.TaskId);
             }
 
+            if (comment.MaterialsIds != null && comment.MaterialsIds.Count > 0)
+            {
+                c.Materials = _materialsRepository.GetAll(comment.MaterialsIds);
+            }
+
             return _commentRepository.AddComment(c);
         }
 
         public void DeleteComment(int id)
         {
             _commentRepository.DeleteComment(id);
+        }
+
+        public int AddMaterial(MaterialModel material)
+        {
+            return _materialsRepository.AddMaretial(_mapper.Map<MaterialDto>(material));
+        }
+
+        public void ChangeLink(int id, string link)
+        {
+            _materialsRepository.ChangeLink(id, link);
         }
     }
 }

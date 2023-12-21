@@ -20,6 +20,8 @@ namespace GraduateWorkControl.BLL.Models.TeacherModels
 
         public string Email { get; set; }
 
+        public string? PhotoLink { get; set; }
+        
         public string Password { get; set; }
 
         public string? PhoneNumber { get; set; }

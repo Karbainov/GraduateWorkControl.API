@@ -14,6 +14,8 @@ namespace GraduateWorkControl.API.Models.TeacherModels.OutputModels
 
         public string Password {  get; set; }
 
+        public string? PhotoLink { get; set; }
+
         public string? PhoneNumber { get; set; }
 
         public FacultyOutputModel Faculty { get; set; }

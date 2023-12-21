@@ -19,6 +19,9 @@ namespace GraduateWorkControl.DAL.Dtos
         [Required]
         public string LastName { get; set; }
 
+        [AllowNull]
+        public string? PhotoLink {  get; set; }
+
         [Required]
         public string Email { get; set; }
 

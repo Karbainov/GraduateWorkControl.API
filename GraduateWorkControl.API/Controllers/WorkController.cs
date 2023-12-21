@@ -35,14 +35,14 @@ namespace GraduateWorkControl.API.Controllers
             _mapper = new Mapper(config);
         }
 
-        //[Authorize(Roles = "student, teacher")]
+        [Authorize(Roles = "student, teacher")]
         [HttpGet("{studentId}",Name = "GetAllStudentsTasksById")]
         public IActionResult GetAllStudentsTasksById(int studentId)
         {
            return Ok(_mapper.Map<List<TaskShortOutputModel>>(_workService.GetAllTasksByStudentId(studentId)));
         }
 
-        //[Authorize(Roles = "student, teacher")]
+        [Authorize(Roles = "student, teacher")]
         [HttpGet("{studentId}/{taskId}", Name = "GetTaskById")]
         public IActionResult GetTaskById(int taskId)
         {
@@ -62,7 +62,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(res);
         }
 
-        //[Authorize(Roles = "teacher")]
+        [Authorize(Roles = "teacher")]
         [HttpPost("{studentId}", Name = "AddTask")]
         public IActionResult AddTask(int studentId, TaskInputModel task)
         {
@@ -71,7 +71,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_workService.AddTask(t));
         }
 
-        //[Authorize(Roles = "teacher")]
+        [Authorize(Roles = "teacher")]
         [HttpPut("{studentId}/{taskId}", Name = "UpdateTask")]
         public IActionResult UpdateTask(int taskId, TaskInputModel task)
         {
@@ -81,7 +81,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "teacher")]
+        [Authorize(Roles = "teacher")]
         [HttpDelete("{studentId}/{taskId}", Name = "DeleteTask")]
         public IActionResult DeleteTask(int taskId)
         {
@@ -89,7 +89,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "teacher")]
+        [Authorize(Roles = "teacher")]
         [HttpPut("{studentId}/{taskId}/state", Name = "UpdateTaskState")]
         public IActionResult UpdateTaskState(int taskId, TaskState state)
         {
@@ -97,7 +97,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "student")]
+        [Authorize(Roles = "student")]
         [HttpPut("{studentId}/{taskId}/review", Name = "UpdateTaskStateToReview")]
         public IActionResult UpdateTaskStateToReview(int taskId)
         {
@@ -105,7 +105,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "teacher, student")]
+        [Authorize(Roles = "teacher")]
         [HttpPost("{studentId}/{taskId}/teacher", Name = "AddComentByTeacher")]
         public IActionResult AddComentByTeacher(int taskId, CommentInputModel comment)
         {
@@ -115,6 +115,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_workService.AddComment(c));
         }
 
+        [Authorize(Roles = "student")]
         [HttpPost("{studentId}/{taskId}", Name = "AddComentByStudent")]
         public IActionResult AddComentByStudent(int taskId, CommentInputModel comment)
         {
@@ -124,7 +125,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_workService.AddComment(c));
         }
 
-        //[Authorize(Roles = "teacher, student")]
+        [Authorize(Roles = "teacher, student")]
         [HttpDelete("{studentId}/{taskId}/{commentId}", Name = "DeleteComent")]
         public IActionResult DeleteComent(int commentId)
         {

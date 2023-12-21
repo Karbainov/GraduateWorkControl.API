@@ -27,14 +27,14 @@ namespace GraduateWorkControl.API.Controllers
             _mapper = new Mapper(config);
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpGet(Name = "GetAllTeachersInfoForAdmin")]
         public IActionResult GetAllTeachersInfoForAdmin()
         {
             return Ok(_mapper.Map<List<TeacherInfoOutputModel>>(_teacherService.GetAllTeachers()));
         }
 
-        //[Authorize(Roles = "admin, teacher")]
+        [Authorize(Roles = "admin, teacher")]
         [HttpGet("{id}",Name = "GetFullTeacherInfoById")]
         public IActionResult GetFullTeacherInfoById(int id)
         {
@@ -47,7 +47,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_mapper.Map<List<TeacherInfoOutputModel>>(_teacherService.GetTeachersByFacultyAndSubjects(facultyAndSubject.FacultyName, facultyAndSubject.SubjectName)));
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost(Name = "AddTeacher")]
         public IActionResult AddTeacher(TeacherRegistrationInfoInputModel teacher)
         {
@@ -55,7 +55,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_teacherService.AddTecher(t));
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}", Name = "UpdateTeacherByAdmin")]
         public IActionResult UpdateTeacherByAdmin(TeacherFullInfoInputModel teacher)
         {
@@ -63,7 +63,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "teacher")]
+        [Authorize(Roles = "teacher")]
         [HttpPut(Name = "UpdateTeacherByUser")]
         public IActionResult UpdateTeacherByUser(TeacherShortInfoInputModel teacher)
         {
@@ -71,7 +71,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}",Name = "DeleteTeacherById")]
         public IActionResult DeleteTeacherById(int id)
         {

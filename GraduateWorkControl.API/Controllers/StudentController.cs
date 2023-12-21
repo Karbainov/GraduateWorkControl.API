@@ -30,14 +30,15 @@ namespace GraduateWorkControl.API.Controllers
             });
             _mapper = new Mapper(config);
         }
-        //[Authorize(Roles = "admin")]
+        
+        [Authorize(Roles = "admin")]
         [HttpGet(Name = "GetAllStudentsInfoForAdmin")]
         public IActionResult GetAllStudentsInfoForAdmin()
         {
             return Ok(_mapper.Map<List<StudentInfoOutputModel>>(_studentServise.GetAllStudents()));
         }
 
-        //[Authorize(Roles = "teacher")]
+        [Authorize(Roles = "teacher")]
         [HttpGet("by-teacher/{teacherId}", Name = "GetAllStudentsInfoByTeacherId")]
         public IActionResult GetAllStudentsInfoByTeacherId(int teacherId)
         {
@@ -46,7 +47,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_mapper.Map<List<StudentInfoOutputModel>>(s));
         }
 
-        //[Authorize(Roles = "admin, student")]
+        [Authorize(Roles = "admin, student")]
         [HttpGet("{id}", Name = "GetFullStudentInfoById")]
         public IActionResult GetFullStudentInfoById(int id)
         {
@@ -62,7 +63,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok(_studentServise.AddStudent(s));
         }
 
-        //[Authorize(Roles = "student")]
+        [Authorize(Roles = "student")]
         [HttpPut("{id}", Name = "UpdateStudent")]
         public IActionResult UpdateStudent(StudentInfoInputModel student)
         {
@@ -70,7 +71,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}", Name = "DeleteStudentById")]
         public IActionResult DeleteStudentById(int id)
         {

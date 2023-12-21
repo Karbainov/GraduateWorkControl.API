@@ -24,35 +24,35 @@ namespace GraduateWorkControl.API.Controllers
             _mapper = new Mapper(config);
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("faculty", Name = "GetAllFacultys")]
         public IActionResult GetAllFacultys()
         {
             return Ok(_mapper.Map<List<FacultyOutputModel>>(_optionsService.GetAllFacultys()));
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet("subject", Name = "GetAllSubjects")]
         public IActionResult GetAllSubjects()
         {
             return Ok(_mapper.Map<List<SubjectOutputModel>>(_optionsService.GetAllSubjects()));
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost("faculty", Name = "AddFaculty")]
         public IActionResult AddFaculty(string name)
         {
             return Ok(_optionsService.AddFaculty(name));
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost("subject", Name = "AddSubject")]
         public IActionResult AddSubject(string name)
         {
             return Ok(_optionsService.AddSubject(name));
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut ("faculty/{id}", Name = "ChangeFacultyName")]
         public IActionResult ChangeFacultyName(int id, string newName)
         {
@@ -60,7 +60,7 @@ namespace GraduateWorkControl.API.Controllers
             return Ok();
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "admin")]
         [HttpPut("subject/{id}", Name = "ChangeSubjectName")]
         public IActionResult ChangeSubjectName(int id, string newName)
         {

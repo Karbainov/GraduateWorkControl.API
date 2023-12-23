@@ -15,6 +15,8 @@ namespace GraduateWorkControl.BLL.Models.TeacherModels
 
         public string LastName { get; set; }
 
+        public string? FatherName { get; set; }
+
         public string Email { get; set; }
 
         public string? PhoneNumber { get; set; }

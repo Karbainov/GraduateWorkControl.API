@@ -10,6 +10,8 @@ namespace GraduateWorkControl.API.Models.TeacherModels.OutputModels
 
         public string LastName { get; set; }
 
+        public string? FatherName { get; set; }
+
         public string Email { get; set; }
         public string? PhotoLink { get; set; }
         public string? PhoneNumber { get; set; }

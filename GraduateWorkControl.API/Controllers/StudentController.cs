@@ -35,7 +35,7 @@ public class StudentController : Controller
         return Ok(_mapper.Map<List<StudentInfoOutputModel>>(_studentServise.GetAllStudents()));
     }
 
-    [Authorize(Roles = "teacher")]
+    [Authorize(Roles = "teacher, admin")]
     [HttpGet("by-teacher/{teacherId}", Name = "GetAllStudentsInfoByTeacherId")]
     public IActionResult GetAllStudentsInfoByTeacherId(int teacherId)
     {

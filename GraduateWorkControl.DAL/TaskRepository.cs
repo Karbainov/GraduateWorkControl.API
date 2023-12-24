@@ -11,7 +11,12 @@ namespace GraduateWorkControl.DAL
 {
     public class TaskRepository
     {
-        private Context _context = Context.MainContext;
+        private Context _context;
+
+        public TaskRepository()
+        {
+            _context = new Context();
+        }
 
         public int AddTask(TaskDto task)
         {

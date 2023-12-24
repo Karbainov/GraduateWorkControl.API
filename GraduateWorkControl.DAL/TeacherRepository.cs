@@ -10,7 +10,12 @@ namespace GraduateWorkControl.DAL
 {
     public class TeacherRepository
     {
-        private Context _context = Context.MainContext;
+        private Context _context;
+
+        public TeacherRepository()
+        {
+            _context = new Context();
+        }
 
         public int AddTeacher(TeacherDto teacherDto)
         {

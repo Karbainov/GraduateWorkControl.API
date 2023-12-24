@@ -6,8 +6,6 @@ namespace GraduateWorkControl.DAL
 {
     public class Context : DbContext
     {
-        public static Context MainContext = new Context();
-
         public DbSet<SubjectDto> Subjects { get; set; }
 
         public DbSet<FacultyDto> Facultys { get; set; }

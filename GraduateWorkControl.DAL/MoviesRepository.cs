@@ -5,7 +5,12 @@ namespace GraduateWorkControl.DAL;
 
 public class MoviesRepository
 {
-    private Context _context = Context.MainContext;
+    private Context _context;
+
+    public MoviesRepository()
+    {
+        _context = new Context();
+    }
 
     public int Register(User user)
     {

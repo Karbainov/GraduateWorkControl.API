@@ -9,7 +9,13 @@ namespace GraduateWorkControl.DAL
 {
     public class OptionsRepository
     {
-        private Context _context = Context.MainContext;
+        private Context _context;
+
+        public OptionsRepository()
+        {
+            _context = new Context();
+        }
+
         public int AddSubject(string subject)
         {
             SubjectDto subjectDto = new SubjectDto() { Name = subject };

@@ -11,7 +11,12 @@ namespace GraduateWorkControl.DAL
 {
     public class ApplicationRepository
     {
-        private Context _context = Context.MainContext;
+        private Context _context;
+
+        public ApplicationRepository()
+        {
+            _context = new Context();
+        }
 
         public int AddApplication(ApplicationDto application)
         {

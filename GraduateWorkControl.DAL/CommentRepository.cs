@@ -9,7 +9,12 @@ namespace GraduateWorkControl.DAL
 {
     public class CommentRepository
     {
-        private Context _context = Context.MainContext;
+        private Context _context;
+
+        public CommentRepository()
+        {
+            _context = new Context();
+        }
 
         public int AddComment(CommentDto comment)
         {

@@ -9,7 +9,12 @@ namespace GraduateWorkControl.DAL
 {
     public class MaterialsRepository
     {
-        private Context _context = Context.MainContext;
+        private Context _context;
+
+        public MaterialsRepository()
+        {
+            _context = new Context();
+        }
 
         public int AddMaretial(MaterialDto material)
         {

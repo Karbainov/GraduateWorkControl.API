@@ -1,4 +1,5 @@
-﻿using GraduateWorkControl.BLL;
+﻿using GraduateWorkControl.API.Models.MaterialModels.OutputModels;
+using GraduateWorkControl.BLL;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -25,7 +26,8 @@ namespace GraduateWorkControl.API.Controllers
         public IActionResult Login(string email, string password)
         {
             List<Claim> claims=null;
-
+            int id;
+            string role = "";
             if (email == "admin" && password=="admin")
             {
                 claims = new List<Claim>
@@ -33,6 +35,9 @@ namespace GraduateWorkControl.API.Controllers
                 new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.Role, "admin")
                 };
+
+                id = 0;
+                role= "admin";
             }
             else 
             {
@@ -45,6 +50,9 @@ namespace GraduateWorkControl.API.Controllers
                         new Claim(ClaimTypes.Role, "teacher"),
                         new Claim("Id",t.Id.ToString())
                     };
+
+                    id = t.Id;
+                    role= "teacher";
                 }
                 else
                 {
@@ -58,6 +66,9 @@ namespace GraduateWorkControl.API.Controllers
                             new Claim("Id",s.Id.ToString())
                         };
                     }
+
+                    id = s.Id;
+                    role = "student";
                 }
             }
 
@@ -73,7 +84,14 @@ namespace GraduateWorkControl.API.Controllers
                     expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(30)),
                     signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
 
-            return Ok(new JwtSecurityTokenHandler().WriteToken(jwt));
+            LoginOutputModel model = new LoginOutputModel()
+            {
+                Id = id,
+                Token = new JwtSecurityTokenHandler().WriteToken(jwt),
+                Role = role
+            };
+
+            return Ok(model);
         }
     }
 }

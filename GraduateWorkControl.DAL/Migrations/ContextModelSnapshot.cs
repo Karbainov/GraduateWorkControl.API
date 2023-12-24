@@ -36,10 +36,10 @@ namespace GraduateWorkControl.DAL.Migrations
                     b.Property<string>("CoveringLetter")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StudentId")
+                    b.Property<int?>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.Property<string>("WorkTheme")
@@ -305,6 +305,9 @@ namespace GraduateWorkControl.DAL.Migrations
                     b.Property<int>("FacultyId")
                         .HasColumnType("int");
 
+                    b.Property<string>("FatherName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -352,15 +355,11 @@ namespace GraduateWorkControl.DAL.Migrations
                 {
                     b.HasOne("GraduateWorkControl.DAL.Dtos.StudentDto", "Student")
                         .WithMany("Application")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StudentId");
 
                     b.HasOne("GraduateWorkControl.DAL.Dtos.TeacherDto", "Teacher")
                         .WithMany("Applications")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Student");
 

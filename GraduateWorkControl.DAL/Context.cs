@@ -1,5 +1,6 @@
 ﻿using GraduateWorkControl.DAL.Dtos;
 using GraduateWorkControl.DAL.Dtos.Movies;
+using GraduateWorkControl.DAL.Dtos.Travel;
 using Microsoft.EntityFrameworkCore;
 
 namespace GraduateWorkControl.DAL
@@ -25,6 +26,7 @@ namespace GraduateWorkControl.DAL
         public DbSet<User> Users { get; set; }
         public DbSet<UserWatchList> UserWatchLists { get; set; }
         public DbSet<MovieRating> Ratings { get; set; }
+        public DbSet<Traveller> Travellers { get; set; }
 
         public Context()
         {

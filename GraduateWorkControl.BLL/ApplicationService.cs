@@ -42,9 +42,17 @@ namespace GraduateWorkControl.BLL
             return _applicationRepository.AddApplication(ap);
         }
 
-        public ApplicationModel GetApplicationByUserId(int id)
-        {   
-            return _mapper.Map<ApplicationModel>(_applicationRepository.GetApplicationByUserId(id));
+        public ApplicationModel? GetApplicationByUserId(int id)
+        {
+            var a = _applicationRepository.GetApplicationByUserId(id);
+            if (a == null)
+            {
+                return null;
+            }
+            else
+            {
+                return _mapper.Map<ApplicationModel>(a);
+            }
         }
 
         public List<ApplicationModel> GetApplicationsByTeacherId(int id)

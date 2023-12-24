@@ -21,10 +21,17 @@ namespace GraduateWorkControl.DAL
             return application.Id;
         }
         
-        public ApplicationDto GetApplicationByUserId(int userId)
+        public ApplicationDto? GetApplicationByUserId(int userId)
         {
             var s = _context.Applications.Include(a => a.Student).Include(a => a.Teacher).Where(a => a.Student.Id == userId).ToList();
-            return s[s.Count-1];
+            if (s.Count > 0)
+            {
+                return s[s.Count - 1];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public List<ApplicationDto> GetApplicationsByTeacherId(int teacherId) 

@@ -40,9 +40,16 @@ namespace GraduateWorkControl.API.Controllers
         public IActionResult GetApplicationByStudentId(int studentId) 
         {
             var t = _applicationService.GetApplicationByUserId(studentId);
-            var s = _mapper.Map<StudentsApplicationOutputModel>(t);
-            s.TeachersFullName = $"{t.Teacher.FirstName} {t.Teacher.LastName}";
-            return Ok(s);
+            if (t == null)
+            {
+                return Ok(null);
+            }
+            else
+            {
+                var s = _mapper.Map<StudentsApplicationOutputModel>(t);
+                s.TeachersFullName = $"{t.Teacher.FirstName} {t.Teacher.FatherName} {t.Teacher.LastName}";
+                return Ok(s);
+            }
         }
 
         [Authorize(Roles = "teacher")]

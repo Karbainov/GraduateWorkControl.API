@@ -1,5 +1,6 @@
 ﻿using GraduateWorkControl.Core;
 using GraduateWorkControl.DAL.Dtos;
+using GraduateWorkControl.DAL.Dtos.Movies;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -48,10 +49,10 @@ namespace GraduateWorkControl.DAL
 
         public void DeniedApplicationByStudent(int studentId)
         {
-            var a = _context.Applications.Include(a => a.Student).Where(a => a.Student.Id == studentId).FirstOrDefault();
-            if (a != null)
+            var s = _context.Applications.Include(a => a.Student).Include(a => a.Teacher).Where(a => a.Student.Id == studentId).ToList();
+            if (s.Count > 0)
             {
-                a.ApplicationState = Core.ApplicationState.DeniedByStydent;
+                s[s.Count-1].ApplicationState = Core.ApplicationState.DeniedByStydent;
             }
             _context.SaveChanges();
         }

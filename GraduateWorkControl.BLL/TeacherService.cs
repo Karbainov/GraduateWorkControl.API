@@ -31,9 +31,9 @@ namespace GraduateWorkControl.BLL
         public int AddTecher(TeacherCreateModel teacher)
         {
             var teacherDto = _mapper.Map<TeacherDto>(teacher);
-            teacherDto.Faculty = _optionsRepository.GetFacultyById(teacher.FacultyId);
-            teacherDto.Subjects = _optionsRepository.GetSubjectById(teacher.SubjectsIds);
-            return _teacherRepository.AddTeacher(teacherDto);
+            //teacherDto.Faculty = _optionsRepository.GetFacultyById(teacher.FacultyId);
+            //teacherDto.Subjects = _optionsRepository.GetSubjectById(teacher.SubjectsIds);
+            return _teacherRepository.AddTeacher(teacherDto, teacher.FacultyId, teacher.SubjectsIds);
         }
 
         public TeacherModel? GetTeacherByLoginAndPassword(string login, string pasword)

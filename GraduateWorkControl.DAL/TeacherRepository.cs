@@ -17,8 +17,11 @@ namespace GraduateWorkControl.DAL
             _context = new Context();
         }
 
-        public int AddTeacher(TeacherDto teacherDto)
+        public int AddTeacher(TeacherDto teacherDto, int facultyId, List<int> subjectsIds)
         {
+            teacherDto.Faculty = _context.Facultys.Where(s => s.Id == facultyId).Single();
+            teacherDto.Subjects = _context.Subjects.Where(s => subjectsIds.Contains(s.Id)).ToList();
+
             teacherDto.IsDeleted = false;
             _context.Teachers.Add(teacherDto);
             _context.SaveChanges();

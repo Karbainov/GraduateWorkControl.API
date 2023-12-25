@@ -43,12 +43,12 @@ namespace GraduateWorkControl.BLL
         public int AddTask(TaskCreateModel task)
         {
             var t=_mapper.Map<TaskDto>(task);
-            t.Student = _studentRepository.GetStudentById(task.StudentId);
-            if (task.MaterialsIds != null && task.MaterialsIds.Count > 0)
-            {
-                t.Materials = _materialsRepository.GetAll(task.MaterialsIds);
-            }
-            return _taskRepository.AddTask(t);
+            //t.Student = _studentRepository.GetStudentById(task.StudentId);
+            //if (task.MaterialsIds != null && task.MaterialsIds.Count > 0)
+            //{
+            //    t.Materials = _materialsRepository.GetAll(task.MaterialsIds);
+            //}
+            return _taskRepository.AddTask(t, task.StudentId, task.MaterialsIds);
         }
 
         public TaskModel GetTaskById(int id)
@@ -63,7 +63,7 @@ namespace GraduateWorkControl.BLL
 
         public void UpdateTask(TaskUpdateModel task)
         {
-            _taskRepository.UpdateTask(_mapper.Map<TaskDto>(task));
+            _taskRepository.UpdateTask(_mapper.Map<TaskDto>(task), task.Materials);
         }
 
         public void DeleteTask(int id)
@@ -79,23 +79,23 @@ namespace GraduateWorkControl.BLL
         public int AddComment(CommentCreateModel comment)
         {
             var c = _mapper.Map<CommentDto>(comment);
-            c.Task = _taskRepository.GetTaskById(comment.TaskId);
+            //c.Task = _taskRepository.GetTaskById(comment.TaskId);
 
-            if((bool)comment.IsTeacher)
-            {
-                c.Teacher= _taskRepository.GetTeacherFromTask(comment.TaskId);
-            }
-            else
-            {
-                c.Student=_taskRepository.GetStudentFromTask(comment.TaskId);
-            }
+            //if((bool)comment.IsTeacher)
+            //{
+            //    c.Teacher= _taskRepository.GetTeacherFromTask(comment.TaskId);
+            //}
+            //else
+            //{
+            //    c.Student=_taskRepository.GetStudentFromTask(comment.TaskId);
+            //}
 
-            if (comment.MaterialsIds != null && comment.MaterialsIds.Count > 0)
-            {
-                c.Materials = _materialsRepository.GetAll(comment.MaterialsIds);
-            }
+            //if (comment.MaterialsIds != null && comment.MaterialsIds.Count > 0)
+            //{
+            //    c.Materials = _materialsRepository.GetAll(comment.MaterialsIds);
+            //}
 
-            return _commentRepository.AddComment(c);
+            return _commentRepository.AddComment(c, comment.TaskId, (bool)comment.IsTeacher, comment.MaterialsIds);
         }
 
         public void DeleteComment(int id)

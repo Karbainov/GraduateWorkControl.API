@@ -18,9 +18,11 @@ namespace GraduateWorkControl.DAL
             _context = new Context();
         }
 
-        public int AddApplication(ApplicationDto application)
+        public int AddApplication(ApplicationDto application, int studentId, int teacherId)
         {
             application.ApplicationState = Core.ApplicationState.Сonsideration;
+            application.Teacher=_context.Teachers.Where(x => x.Id==teacherId).FirstOrDefault();
+            application.Student= _context.Students.Where(x => x.Id == studentId).FirstOrDefault();
             _context.Applications.Add(application);
             _context.SaveChanges(); 
             return application.Id;

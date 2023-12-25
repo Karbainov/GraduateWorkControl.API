@@ -56,18 +56,21 @@ namespace GraduateWorkControl.DAL
             _context.SaveChanges();
         }
 
-        public void UpdateFullTeacher(TeacherDto teacherDto)
+        public void UpdateFullTeacher(TeacherDto teacherDto, int facultyId, List<int> subjectsIds)
         {
             var t = _context.Teachers.Where(t => t.Id == teacherDto.Id && !t.IsDeleted).FirstOrDefault();
             if (t != null)
             {
+                t.Faculty = _context.Facultys.Where(s => s.Id == facultyId).Single();
+                t.Subjects = _context.Subjects.Include(s=>s.Teachers).Where(s => subjectsIds.Contains(s.Id)).ToList();
+
                 t.PhoneNumber = teacherDto.PhoneNumber;
                 t.Email = teacherDto.Email;
                 t.FirstName = teacherDto.FirstName;
                 t.LastName = teacherDto.LastName;
                 t.Password = teacherDto.Password;
-                t.Subjects = teacherDto.Subjects;
-                t.Faculty = teacherDto.Faculty;
+                t.LastName = teacherDto.FatherName;
+
             }
             _context.SaveChanges();
         }

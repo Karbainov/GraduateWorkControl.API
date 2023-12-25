@@ -18,8 +18,10 @@ namespace GraduateWorkControl.DAL
             _context = new Context();
         }
 
-        public int AddTask(TaskDto task)
+        public int AddTask(TaskDto task, int studentId, List<int> materialsId)
         {
+            task.Student=_context.Students.FirstOrDefault(s => s.Id == studentId);
+            task.Materials=_context.Materials.Where(s => materialsId.Contains(s.Id)).ToList();
             _context.Task.Add(task);
             _context.SaveChanges();
             return task.Id;
@@ -35,11 +37,15 @@ namespace GraduateWorkControl.DAL
             return _context.Task.Include(t=>t.Student).Where(t=>t.Student.Id==id).ToList();
         }
 
-        public void UpdateTask(TaskDto task)
+        public void UpdateTask(TaskDto task, List<int> materialsId)
         {
             var t=_context.Task.Where(t => t.Id == task.Id).FirstOrDefault();
             if(t!=null)
             {
+                if (materialsId != null)
+                {
+                    t.Materials = _context.Materials.Where(s => materialsId.Contains(s.Id)).ToList();
+                }
                 t.Number = task.Number;
                 t.Name = task.Name;
                 t.Description = task.Description;

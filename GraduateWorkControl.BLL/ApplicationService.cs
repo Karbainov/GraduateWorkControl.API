@@ -37,9 +37,7 @@ namespace GraduateWorkControl.BLL
         public int AddApplication(ApplicationCreateModel application)
         {
             var ap = _mapper.Map<ApplicationDto>(application);
-            ap.Student = _studentRepository.GetStudentById(application.StudentId);
-            ap.Teacher = _teacherRepository.GetTeacherById(application.TeacherId);
-            return _applicationRepository.AddApplication(ap);
+            return _applicationRepository.AddApplication(ap, application.StudentId, application.TeacherId);
         }
 
         public ApplicationModel? GetApplicationByUserId(int id)

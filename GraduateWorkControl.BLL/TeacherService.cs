@@ -62,9 +62,9 @@ namespace GraduateWorkControl.BLL
         public void UpdateFullTeacher(TeacherFullUpdateModel teacher)
         {
             var t = _mapper.Map<TeacherDto>(teacher);
-            t.Faculty = _optionsRepository.GetFacultyById(teacher.FacultyId);
-            t.Subjects = _optionsRepository.GetSubjectById(teacher.SubjectsIds);
-            _teacherRepository.UpdateFullTeacher(t);
+            //t.Faculty = _optionsRepository.GetFacultyById(teacher.FacultyId);
+            //t.Subjects = _optionsRepository.GetSubjectById(teacher.SubjectsIds);
+            _teacherRepository.UpdateFullTeacher(t, teacher.FacultyId, teacher.SubjectsIds);
         }
 
         public TeacherModel GetTeacherById(int id)

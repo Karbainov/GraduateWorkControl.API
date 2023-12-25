@@ -68,7 +68,8 @@ namespace GraduateWorkControl.DAL
                 t.Email = teacherDto.Email;
                 t.FirstName = teacherDto.FirstName;
                 t.LastName = teacherDto.LastName;
-                t.LastName = teacherDto.FatherName;
+                t.FatherName = teacherDto.FatherName;
+                t.PhotoLink = teacherDto.PhotoLink;
 
             }
             _context.SaveChanges();

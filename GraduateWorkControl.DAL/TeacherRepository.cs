@@ -68,7 +68,6 @@ namespace GraduateWorkControl.DAL
                 t.Email = teacherDto.Email;
                 t.FirstName = teacherDto.FirstName;
                 t.LastName = teacherDto.LastName;
-                t.Password = teacherDto.Password;
                 t.LastName = teacherDto.FatherName;
 
             }
